@@ -21,7 +21,7 @@ public class LitecartTestFirefoxNight extends BaseTest
         DesiredCapabilities cap = new DesiredCapabilities();
         FirefoxOptions options = new FirefoxOptions();
         options.setLegacy(true);
-        options.setBinary("C:\\Program Files\\Nightly\\firefox.exe");
+        options.setBinary("C:\\Program Files (x86)\\Nightly\\firefox.exe");
         cap.setCapability(FirefoxOptions.FIREFOX_OPTIONS, options);
         cap.setCapability(FirefoxDriver.MARIONETTE, true);
         driver = new FirefoxDriver(cap);
