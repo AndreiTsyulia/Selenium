@@ -24,14 +24,12 @@ public class AdminPanelLogin
 
     public void typeUsername(String item)
     {
-        //By lUsername = By.xpath(username);
         By lUsername = By.name("username");
         driver.findElement(lUsername).sendKeys(item);
     }
 
     public void typePassword(String item)
     {
-        //By lPassword = By.xpath(password);
         By lPassword = By.name("password");
         driver.findElement(lPassword).sendKeys(item);
     }
@@ -40,6 +38,12 @@ public class AdminPanelLogin
     {
         By lPressBtn = By.xpath(login);
         driver.findElement(lPressBtn).click();
+    }
+
+    public void doLogin(String username, String password){
+        typeUsername(username);
+        typePassword(password);
+        pressButton();
     }
 
 }

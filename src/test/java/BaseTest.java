@@ -3,6 +3,7 @@ import org.testng.annotations.AfterClass;
 
 import LiteCart.AdminPanel;
 import LiteCart.AdminPanelLogin;
+import LiteCart.MainPage;
 import Vtb.BlockHeader;
 
 
@@ -15,6 +16,7 @@ public class BaseTest
     protected BlockHeader blockHeader;
     protected AdminPanelLogin adminPanelLogin;
     protected AdminPanel adminPanel;
+    protected MainPage mainPage;
 
 
 

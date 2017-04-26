@@ -12,13 +12,19 @@ public class AdminPanel
 {
     protected WebDriver driver;
     protected WebDriverWait wait;
-    private String search ="//input[@name='query']";
+    private String search = "//input[@name='query']";
+    private String itemsMenu = "//li[@id='app-']/a";
+    private String itemMenuLinkTemplate = "//ul[@id='box-apps-menu']/li[%s]/a";
+    private String itemMenuTemplate = "//ul[@id='box-apps-menu']/li[%s]";
+    private String subItemsMenu = "//ul[@class='docs']/li";
+    private String subItemMenuTemplate = "//ul[@class='docs']/li[%s]";
+    private String blockTitle = "//main[@id='main']/h1";
 
 
     public AdminPanel(WebDriver driver)
     {
-        this.driver=driver;
-        wait =new WebDriverWait(driver, 10);
+        this.driver = driver;
+        wait = new WebDriverWait(driver, 10);
     }
 
     public boolean isAdminPanel()
@@ -26,5 +32,38 @@ public class AdminPanel
         By lSearch = By.xpath(search);
         wait.until(ExpectedConditions.presenceOfElementLocated(lSearch));
         return driver.findElement(lSearch).isDisplayed();
+    }
+
+    public int getMenuItems()
+    {
+        By lItemsMenu = By.xpath(itemsMenu);
+        return driver.findElements(lItemsMenu).size();
+    }
+
+    public int getSubMenuItems()
+    {
+        By lSubItemsMenu = By.xpath(subItemsMenu);
+        return driver.findElements(lSubItemsMenu).size();
+    }
+
+    public boolean checkBlockTitle()
+    {
+        By lBlockTitle = By.xpath(blockTitle);
+        return driver.findElement(lBlockTitle).isDisplayed();
+    }
+
+    public void clickItemMenu(int i)
+    {
+        By lItemMenuTemplate = By.xpath(String.format(itemMenuTemplate, "" + i));
+        By lItemMenuLinkTemplate = By.xpath(String.format(itemMenuLinkTemplate, "" + i));
+        driver.findElement(lItemMenuLinkTemplate).click();
+        wait.until(ExpectedConditions.attributeContains(lItemMenuTemplate, "class", "selected"));
+    }
+
+    public void clickSubItemMenu(int i)
+    {
+        By lSubItemMenuTemplate = By.xpath(String.format(subItemMenuTemplate, "" + i));
+        driver.findElement(lSubItemMenuTemplate).click();
+        wait.until(ExpectedConditions.attributeContains(lSubItemMenuTemplate, "class", "selected"));
     }
 }
