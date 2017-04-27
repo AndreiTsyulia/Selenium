@@ -49,7 +49,14 @@ public class MainPage
         By lProductInCampaignTemplate = By.xpath(String.format(productInCampaignTemplate, "" + j));
         WebElement element = driver.findElement(lProductInCampaignTemplate);
         By lStikers = By.xpath(stikers);
-        return element.findElement(lStikers).isDisplayed();
+        if (element.findElements(lStikers).size() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void clickPopularProducts()
@@ -70,7 +77,14 @@ public class MainPage
         By lProductInPopularTemplate = By.xpath(String.format(productInPopularTemplate, "" + j));
         WebElement element = driver.findElement(lProductInPopularTemplate);
         By lStikers = By.xpath(stikers);
-        return element.findElement(lStikers).isDisplayed();
+        if (element.findElements(lStikers).size() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void clickLatestProducts()
@@ -91,6 +105,13 @@ public class MainPage
         By lProductInLatestTemplate = By.xpath(String.format(productInLatestTemplate, "" + j));
         WebElement element = driver.findElement(lProductInLatestTemplate);
         By lStikers = By.xpath(stikers);
-        return element.findElement(lStikers).isDisplayed();
+        if (element.findElements(lStikers).size() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
