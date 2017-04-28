@@ -1,5 +1,7 @@
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -14,6 +16,9 @@ import LiteCart.MainPage;
  */
 public class StickerTest extends BaseTest
 {
+    protected WebDriver driver;
+    protected MainPage mainPage;
+
     @BeforeClass(alwaysRun = true)
     public void beforeClass()
     {
@@ -56,5 +61,11 @@ public class StickerTest extends BaseTest
             softAssert.assertTrue(mainPage.checkStikerInLatest(i));
         }
         softAssert.assertAll();
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void afterClass()
+    {
+        driver.quit();
     }
 }

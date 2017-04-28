@@ -15,7 +15,6 @@ public class AdminPanelLogin
     private String password ="//input[@name='password']";
     private String login ="//button[@name='login']";
 
-
     public AdminPanelLogin(WebDriver driver)
     {
         this.driver=driver;

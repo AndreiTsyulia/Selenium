@@ -1,7 +1,9 @@
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -11,8 +13,11 @@ import LiteCart.AdminPanelLogin;
 /**
  * Created by Andrei_Tsyulia on 4/22/2017.
  */
-public class LitecartTestFirefoxESR extends BaseTest
+public class Task5FirefoxESRTests
 {
+    protected WebDriver driver;
+    protected AdminPanelLogin adminPanelLogin;
+    protected AdminPanel adminPanel;
 
     @BeforeClass(alwaysRun = true)
     public void beforeClass()
@@ -36,6 +41,12 @@ public class LitecartTestFirefoxESR extends BaseTest
         adminPanelLogin.typePassword("admin");
         adminPanelLogin.pressButton();
         Assert.assertTrue(adminPanel.isAdminPanel());
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void afterClass()
+    {
+        driver.quit();
     }
 }
 

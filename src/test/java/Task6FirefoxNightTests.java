@@ -1,7 +1,9 @@
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -11,8 +13,12 @@ import LiteCart.AdminPanelLogin;
 /**
  * Created by Andrei_Tsyulia on 4/22/2017.
  */
-public class LitecartTestFirefoxNight extends BaseTest
+public class Task6FirefoxNightTests
 {
+    protected WebDriver driver;
+    protected AdminPanelLogin adminPanelLogin;
+    protected AdminPanel adminPanel;
+
 
     @BeforeClass(alwaysRun = true)
     public void beforeClass()
@@ -26,7 +32,6 @@ public class LitecartTestFirefoxNight extends BaseTest
         cap.setCapability(FirefoxDriver.MARIONETTE, true);
         driver = new FirefoxDriver(cap);
 
-
         adminPanelLogin = new AdminPanelLogin(driver);
         adminPanel = new AdminPanel(driver);
     }
@@ -39,5 +44,11 @@ public class LitecartTestFirefoxNight extends BaseTest
         adminPanelLogin.typePassword("admin");
         adminPanelLogin.pressButton();
         Assert.assertTrue(adminPanel.isAdminPanel());
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void afterClass()
+    {
+        driver.quit();
     }
 }

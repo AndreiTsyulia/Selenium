@@ -1,5 +1,7 @@
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -9,8 +11,11 @@ import LiteCart.AdminPanelLogin;
 /**
  * Created by Andrei_Tsyulia on 4/21/2017.
  */
-public class LitecartTestIE extends BaseTest
+public class Task4IETests
 {
+    protected WebDriver driver;
+    protected AdminPanelLogin adminPanelLogin;
+    protected AdminPanel adminPanel;
 
     @BeforeClass(alwaysRun = true)
     public void beforeClass()
@@ -29,5 +34,11 @@ public class LitecartTestIE extends BaseTest
         adminPanelLogin.typePassword("admin");
         adminPanelLogin.pressButton();
         Assert.assertTrue(adminPanel.isAdminPanel());
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void afterClass()
+    {
+        driver.quit();
     }
 }

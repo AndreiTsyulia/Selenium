@@ -1,5 +1,7 @@
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -13,8 +15,12 @@ import LiteCart.AdminPanelLogin;
 /**
  * Created by Andrei_Tsyulia on 4/25/2017.
  */
-public class AdminPanelMenuTest extends BaseTest
+public class Task7AdminPanelMenuTests
 {
+    protected WebDriver driver;
+    protected AdminPanelLogin adminPanelLogin;
+    protected AdminPanel adminPanel;
+
     @BeforeClass(alwaysRun = true)
     public void beforeClass()
     {
@@ -26,7 +32,6 @@ public class AdminPanelMenuTest extends BaseTest
         driver.manage().window().maximize();
         adminPanelLogin = new AdminPanelLogin(driver);
         adminPanel = new AdminPanel(driver);
-
     }
 
     @Test
@@ -52,5 +57,11 @@ public class AdminPanelMenuTest extends BaseTest
             }
         }
         softAssert.assertAll();
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void afterClass()
+    {
+        driver.quit();
     }
 }
