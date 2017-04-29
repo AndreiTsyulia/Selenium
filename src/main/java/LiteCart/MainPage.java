@@ -1,6 +1,7 @@
 package LiteCart;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,6 +21,7 @@ public class MainPage
         wait = new WebDriverWait(driver, 10);
     }
 
+    private String pageFlag = "//div[@id='rslides1_s0']/img";
     private String stikers = ".//div[contains(@class,'sticker')]";
     private String campaignProducts = "//a[contains(text(),'Campaign Products')]/..";
     private String productsInCampaign = "//div[@id='box-campaigns']//div[@class='product column shadow hover-light']";
@@ -30,6 +32,22 @@ public class MainPage
     private String latestProducts = "//a[contains(text(),'Latest Products')]/..";
     private String productsInLatest = "//div[@id='box-latest-products']//div[@class='product column shadow hover-light']";
     private String productInLatestTemplate = "//div[@id='box-latest-products']/div/div[%s]";
+
+
+    //---------------Блок товара---------------\/
+    private String viewOfProduct = "//div[@id='view-full-page']/a";
+    private String nameOfProduct = "//div[@id='box-campaigns']//div[@class='name']";
+    private String campaignPrice = "//div[@id='box-campaigns']//strong[@class='campaign-price']";
+    private String regularPrice = "//div[@id='box-campaigns']//s[@class='regular-price']";
+    //---------------Блок товара---------------/\
+
+
+    public boolean isMainPage()
+    {
+        By lPageFlag = By.xpath(pageFlag);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(lPageFlag));
+        return driver.findElement(lPageFlag).isDisplayed();
+    }
 
     public void clickCampaignProducts()
     {
@@ -93,4 +111,145 @@ public class MainPage
         By lStikers = By.xpath(stikers);
         return (element.findElements(lStikers).size() == 1);
     }
+
+    //---------------Блок товара---------------\/
+    public String getProductText()
+    {
+        clickCampaignProducts();
+        By lNameOfProduct = By.xpath(nameOfProduct);
+        String sNameOfProduct = driver.findElement(lNameOfProduct).getText();
+        System.out.println(sNameOfProduct);
+        return sNameOfProduct;
+    }
+
+    public void goToProductBlock()
+    {
+        By lNameOfProduct = By.xpath(nameOfProduct);
+        driver.findElement(lNameOfProduct).click();
+        By lViewOfProduct = By.xpath(viewOfProduct);
+        String driverName = driver.getClass().getSimpleName();
+        System.out.println(driverName);
+        if (driverName.equals("FirefoxDriver"))
+        {
+            try
+            {
+                wait.until(ExpectedConditions.elementToBeClickable(lViewOfProduct));
+            }
+            catch (Exception e)
+            {
+            }
+        }
+        if (driver.getCurrentUrl().equals("http://localhost/litecart/en/"))
+        {
+            driver.findElement(lViewOfProduct).click();
+            wait.until(ExpectedConditions.urlContains("duck"));
+        }
+    }
+
+    public String getRegularPrice()
+    {
+        clickCampaignProducts();
+        By lRegularPrice = By.xpath(regularPrice);
+        String sRegularPrice = driver.findElement(lRegularPrice).getText();
+        System.out.println(sRegularPrice);
+        return sRegularPrice;
+    }
+
+    public String getCampaignPrice()
+    {
+        clickCampaignProducts();
+        By lCampaignPrice = By.xpath(campaignPrice);
+        String sCampaignPrice = driver.findElement(lCampaignPrice).getText();
+        System.out.println(sCampaignPrice);
+        return sCampaignPrice;
+    }
+
+    public boolean checkTextLine()
+    {
+        clickCampaignProducts();
+        By lRegularPrice = By.xpath(regularPrice);
+        String sRegularPrice = driver.findElement(lRegularPrice).getTagName();
+        System.out.println(sRegularPrice);
+        if (sRegularPrice.equals("s") || sRegularPrice.equals("del") || sRegularPrice.equals("strike"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean checkRegularPriceColor()
+    {
+        clickCampaignProducts();
+        By lRegularPrice = By.xpath(regularPrice);
+        String sRegularPrice = driver.findElement(lRegularPrice).getCssValue("color");
+        sRegularPrice = sRegularPrice.substring((sRegularPrice.indexOf("(") + 1), sRegularPrice.lastIndexOf(")"));
+        System.out.println(sRegularPrice);
+        String[] strColor = sRegularPrice.split(",");
+        if (strColor[0].equals(strColor[1]) || strColor[1].equals(strColor[2]))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean checkCampaignPriceColor()
+    {
+        clickCampaignProducts();
+        By lCampaignPrice = By.xpath(campaignPrice);
+        String sCampaignPrice = driver.findElement(lCampaignPrice).getCssValue("color");
+        sCampaignPrice = sCampaignPrice.substring((sCampaignPrice.indexOf("(") + 1), sCampaignPrice.lastIndexOf(")"));
+        System.out.println(sCampaignPrice);
+        String[] strColor = sCampaignPrice.split(",");
+        if (Integer.parseInt(strColor[0]) != 0 || strColor[1].equals("0") || strColor[2].equals("0"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean checkBoldCampaignPrice()
+    {
+        clickCampaignProducts();
+        By lCampaignPrice = By.xpath(campaignPrice);
+        String sCampaignPrice = driver.findElement(lCampaignPrice).getTagName();
+        System.out.println(sCampaignPrice);
+        if (sCampaignPrice.equals("b") || sCampaignPrice.equals("strong"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean compareCampaignAndRegularPrices()
+    {
+        clickCampaignProducts();
+        By lCampaignPrice = By.xpath(campaignPrice);
+        Dimension sizeCampaignPrice = driver.findElement(lCampaignPrice).getSize();
+        By lRegularPrice = By.xpath(regularPrice);
+        Dimension sizeRegularPrice = driver.findElement(lRegularPrice).getSize();
+        System.out.println("sizeCampaignPrice - " + sizeCampaignPrice.getHeight() * sizeCampaignPrice.getWidth() + ". "
+            + "sizeRegularPrice - " + sizeRegularPrice.getWidth() * sizeRegularPrice.getHeight());
+        if (sizeCampaignPrice.getHeight() * sizeCampaignPrice.getWidth() > sizeRegularPrice.getWidth() * sizeRegularPrice
+            .getHeight())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    //---------------Блок товара---------------/\
 }
