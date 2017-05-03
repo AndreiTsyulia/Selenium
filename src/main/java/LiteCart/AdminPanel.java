@@ -15,10 +15,13 @@ public class AdminPanel
     private String search = "//input[@name='query']";
     private String itemsMenu = "//li[@id='app-']/a";
     private String itemMenuLinkTemplate = "//ul[@id='box-apps-menu']/li[%s]/a";
+    private String catalogItemMenu = "//li[@id='app-']/a/span[contains(text(),'Catalog')]";
     private String itemMenuTemplate = "//ul[@id='box-apps-menu']/li[%s]";
     private String subItemsMenu = "//ul[@class='docs']/li";
     private String subItemMenuTemplate = "//ul[@class='docs']/li[%s]";
     private String blockTitle = "//main[@id='main']/h1";
+    private String addNewProduct = "//main[@id='main']//a[contains(text(),'Add New Product')]";
+    private String addNewProductTemplate = "//a[text()='%s']";
 
 
     public AdminPanel(WebDriver driver)
@@ -65,5 +68,29 @@ public class AdminPanel
         By lSubItemMenuTemplate = By.xpath(String.format(subItemMenuTemplate, "" + i));
         driver.findElement(lSubItemMenuTemplate).click();
         wait.until(ExpectedConditions.attributeContains(lSubItemMenuTemplate, "class", "selected"));
+    }
+
+    public void goToCatalog()
+    {
+        By lCatalogItemMenu = By.xpath(catalogItemMenu);
+        driver.findElement(lCatalogItemMenu).click();
+    }
+
+    public void pressAddNewProduct()
+    {
+        By lAddNewProduct = By.xpath(addNewProduct);
+        driver.findElement(lAddNewProduct).click();
+    }
+
+    public boolean isDuckPresent(String name)
+    {
+        By lAddNewProductTemplate = By.xpath(String.format(addNewProductTemplate, name));
+        return driver.findElement(lAddNewProductTemplate).isDisplayed();
+    }
+
+    public void goToNewProduct(String name)
+    {
+        By lAddNewProductTemplate = By.xpath(String.format(addNewProductTemplate, name));
+        driver.findElement(lAddNewProductTemplate).click();
     }
 }

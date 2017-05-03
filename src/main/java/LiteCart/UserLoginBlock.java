@@ -18,7 +18,6 @@ public class UserLoginBlock
         wait = new WebDriverWait(driver, 10);
     }
 
-    //private String pageFlag = "//h1[@class='title']";
     private String newUserCreat = "//div[@id='box-account-login']//p/a";
     private String formEmail = "//div[@id='box-account-login']//input[@name='email']";
     private String formPassword = "//div[@id='box-account-login']//input[@name='password']";

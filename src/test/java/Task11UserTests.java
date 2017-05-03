@@ -37,8 +37,8 @@ public class Task11UserTests
         mainPage = new MainPage(driver);
         newUserBlock = new NewUserBlock(driver);
         userLoginBlock = new UserLoginBlock(driver);
-        user=new User("123456789","no", "Andrei", "Tsyulia", "New York, 25 avenu, 5", "no", "12345",
-            "New York", "United States", "New York", "12345678901","qwertyuiop");
+        user = new User("123456789", "no", "Andrei", "Tsyulia", "New York, 25 avenu, 5", "no", "12345",
+            "New York", "United States", "New York", "12345678901", "qwertyuiop");
         System.out.println(user.toString());
     }
 
@@ -75,7 +75,7 @@ public class Task11UserTests
         userLoginBlock.SignIn();
         userLoginBlock.logOut();
     }
-    
+
     @AfterClass(alwaysRun = true)
     public void afterClass()
     {
