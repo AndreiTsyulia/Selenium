@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Andrei_Tsyulia on 4/28/2017.
@@ -69,5 +70,11 @@ public class CountriesBlock
             }
         }
         return true;
+    }
+
+    public void goToSomeCountry()
+    {
+        By lCountriesRef = By.xpath(countriesRef);
+        goToCountry(new Random().nextInt(driver.findElements(lCountriesRef).size()));
     }
 }
