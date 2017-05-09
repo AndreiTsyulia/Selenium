@@ -39,6 +39,8 @@ public class MainPage
     private String nameOfProduct = "//div[@id='box-campaigns']//div[@class='name']";
     private String campaignPrice = "//div[@id='box-campaigns']//strong[@class='campaign-price']";
     private String regularPrice = "//div[@id='box-campaigns']//s[@class='regular-price']";
+    private String nameOfProductPopular = "//div[@id='box-most-popular']//div[@class='name']";
+    private String nameOfProductLatest = "//div[@id='box-latest-products']//div[@class='name']";
     //---------------Блок товара---------------/\
 
 
@@ -126,6 +128,54 @@ public class MainPage
     {
         By lNameOfProduct = By.xpath(nameOfProduct);
         driver.findElement(lNameOfProduct).click();
+        By lViewOfProduct = By.xpath(viewOfProduct);
+        String driverName = driver.getClass().getSimpleName();
+        System.out.println(driverName);
+        if (driverName.equals("FirefoxDriver"))
+        {
+            try
+            {
+                wait.until(ExpectedConditions.elementToBeClickable(lViewOfProduct));
+            }
+            catch (Exception e)
+            {
+            }
+        }
+        if (driver.getCurrentUrl().equals("http://localhost/litecart/en/"))
+        {
+            driver.findElement(lViewOfProduct).click();
+            wait.until(ExpectedConditions.urlContains("duck"));
+        }
+    }
+
+    public void goToProductBlockPopular()
+    {
+        By lNameOfProductPopular = By.xpath(nameOfProductPopular);
+        driver.findElement(lNameOfProductPopular).click();
+        By lViewOfProduct = By.xpath(viewOfProduct);
+        String driverName = driver.getClass().getSimpleName();
+        System.out.println(driverName);
+        if (driverName.equals("FirefoxDriver"))
+        {
+            try
+            {
+                wait.until(ExpectedConditions.elementToBeClickable(lViewOfProduct));
+            }
+            catch (Exception e)
+            {
+            }
+        }
+        if (driver.getCurrentUrl().equals("http://localhost/litecart/en/"))
+        {
+            driver.findElement(lViewOfProduct).click();
+            wait.until(ExpectedConditions.urlContains("duck"));
+        }
+    }
+
+    public void goToProductBlockLatest()
+    {
+        By lNameOfProductLatest = By.xpath(nameOfProductLatest);
+        driver.findElement(lNameOfProductLatest).click();
         By lViewOfProduct = By.xpath(viewOfProduct);
         String driverName = driver.getClass().getSimpleName();
         System.out.println(driverName);

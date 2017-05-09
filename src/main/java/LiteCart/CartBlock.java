@@ -1,10 +1,13 @@
 package LiteCart;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
 
 /**
  * Created by Andrei_Tsyulia on 5/5/2017.
@@ -25,6 +28,7 @@ public class CartBlock
     private String updateCartItem = "//button[@name='update_cart_item']";
     private String tableFlag = "//div[@id='order_confirmation-wrapper']//tbody/tr[1]/td[2]";
     private String thereAreNoItemsInYourCart = "//div[@id='box-checkout']//p/em";
+    private String deleteButton = "//div[@id='box-checkout-cart']//button[@class='btn btn-danger']";
 
     public boolean isCartBlock()
     {
@@ -63,6 +67,34 @@ public class CartBlock
         {
             By lThereAreNoItemsInYourCart = By.xpath(thereAreNoItemsInYourCart);
             wait.until(ExpectedConditions.presenceOfElementLocated(lThereAreNoItemsInYourCart));
+        }
+    }
+
+    public boolean deleteOneKindDuck()
+    {
+        By lDeleteButton = By.xpath(deleteButton);
+        List<WebElement> list = driver.findElements(lDeleteButton);
+        By lTableFlag = By.xpath(tableFlag);
+
+        for (int i = 0; i < list.size()-1; i++)
+        {
+            WebElement elementTab = driver.findElement(lTableFlag);
+            driver.findElement(lDeleteButton).click();
+            wait.until(ExpectedConditions.stalenessOf(elementTab));
+            wait.until(ExpectedConditions.presenceOfElementLocated(lTableFlag));
+        }
+        try
+        {
+            WebElement elementTab = driver.findElement(lTableFlag);
+            driver.findElement(lDeleteButton).click();
+            wait.until(ExpectedConditions.stalenessOf(elementTab));
+            By lThereAreNoItemsInYourCart = By.xpath(thereAreNoItemsInYourCart);
+            wait.until(ExpectedConditions.presenceOfElementLocated(lThereAreNoItemsInYourCart));
+            return true;
+        }
+        catch (NoSuchElementException e)
+        {
+            return false;
         }
     }
 

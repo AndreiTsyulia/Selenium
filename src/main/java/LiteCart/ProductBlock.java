@@ -2,6 +2,7 @@ package LiteCart;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -147,9 +148,13 @@ public class ProductBlock
 
     public void selectSize()
     {
-        By lPackageSize = By.xpath(packageSize);
-        WebElement element = driver.findElement(lPackageSize);
-        new Select(element).selectByValue("Small");
+        try
+        {
+            By lPackageSize = By.xpath(packageSize);
+            WebElement element = driver.findElement(lPackageSize);
+            new Select(element).selectByValue("Small");
+        }catch (NoSuchElementException e){
+        }
     }
 
     public int getDucksInCart()
