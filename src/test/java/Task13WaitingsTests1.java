@@ -40,7 +40,7 @@ public class Task13WaitingsTests1
 
 
     @Test
-    public void putFirstDuckTest()
+    public void addToCartDeleteFromCartTest()
     {
         SoftAssert softAssert = new SoftAssert();
 
@@ -74,7 +74,11 @@ public class Task13WaitingsTests1
 
         productBlock.goToCart();
         cartBlock.isCartBlock();
-        softAssert.assertTrue(cartBlock.deleteOneKindDuck());
+        for (int i = 0; i < cartBlock.getNumberOfDuckKind() - 1; i++)
+        {
+            softAssert.assertTrue(cartBlock.deleteOneKindDuck());
+        }
+        softAssert.assertTrue(cartBlock.deleteLastKindDuck());
         softAssert.assertAll();
     }
 

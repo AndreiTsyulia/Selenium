@@ -72,24 +72,15 @@ public class CartBlock
 
     public boolean deleteOneKindDuck()
     {
-        By lDeleteButton = By.xpath(deleteButton);
-        List<WebElement> list = driver.findElements(lDeleteButton);
-        By lTableFlag = By.xpath(tableFlag);
-
-        for (int i = 0; i < list.size()-1; i++)
+        try
         {
+            By lDeleteButton = By.xpath(deleteButton);
+            By lTableFlag = By.xpath(tableFlag);
             WebElement elementTab = driver.findElement(lTableFlag);
             driver.findElement(lDeleteButton).click();
             wait.until(ExpectedConditions.stalenessOf(elementTab));
             wait.until(ExpectedConditions.presenceOfElementLocated(lTableFlag));
-        }
-        try
-        {
-            WebElement elementTab = driver.findElement(lTableFlag);
-            driver.findElement(lDeleteButton).click();
-            wait.until(ExpectedConditions.stalenessOf(elementTab));
-            By lThereAreNoItemsInYourCart = By.xpath(thereAreNoItemsInYourCart);
-            wait.until(ExpectedConditions.presenceOfElementLocated(lThereAreNoItemsInYourCart));
+
             return true;
         }
         catch (NoSuchElementException e)
@@ -110,6 +101,32 @@ public class CartBlock
             By lThereAreNoItemsInYourCart = By.xpath(thereAreNoItemsInYourCart);
             wait.until(ExpectedConditions.presenceOfElementLocated(lThereAreNoItemsInYourCart));
             return true;
+        }
+    }
+
+    public int getNumberOfDuckKind()
+    {
+        By lDeleteButton = By.xpath(deleteButton);
+        List<WebElement> list = driver.findElements(lDeleteButton);
+        return list.size();
+    }
+
+    public boolean deleteLastKindDuck()
+    {
+        try
+        {
+            By lDeleteButton = By.xpath(deleteButton);
+            By lTableFlag = By.xpath(tableFlag);
+            WebElement elementTab = driver.findElement(lTableFlag);
+            driver.findElement(lDeleteButton).click();
+            wait.until(ExpectedConditions.stalenessOf(elementTab));
+            By lThereAreNoItemsInYourCart = By.xpath(thereAreNoItemsInYourCart);
+            wait.until(ExpectedConditions.presenceOfElementLocated(lThereAreNoItemsInYourCart));
+            return true;
+        }
+        catch (NoSuchElementException e)
+        {
+            return false;
         }
     }
 }
