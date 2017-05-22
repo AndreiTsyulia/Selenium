@@ -5,20 +5,19 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created by Andrei_Tsyulia on 4/25/2017.
  */
-public class MainPage
+public class MainPage extends BaseBlock
 {
-    protected WebDriver driver;
-    protected WebDriverWait wait;
+    public MainPage(ManagerBlocks managerBlocks) {
+        super(managerBlocks);
+    }
 
     public MainPage(WebDriver driver)
     {
-        this.driver = driver;
-        wait = new WebDriverWait(driver, 10);
+        super(driver);
     }
 
     private String pageFlag = "//div[@id='rslides1_s0']/img";
@@ -36,11 +35,12 @@ public class MainPage
 
     //---------------Блок товара---------------\/
     private String viewOfProduct = "//div[@id='view-full-page']/a";
-    private String nameOfProduct = "//div[@id='box-campaigns']//div[@class='name']";
+    private String nameOfProduct = "//div[@id='box-campaign-products']//div[@class='name']";
     private String campaignPrice = "//div[@id='box-campaigns']//strong[@class='campaign-price']";
     private String regularPrice = "//div[@id='box-campaigns']//s[@class='regular-price']";
-    private String nameOfProductPopular = "//div[@id='box-most-popular']//div[@class='name']";
+    private String nameOfProductPopular = "//div[@id='box-popular-products']//div[@class='name']";
     private String nameOfProductLatest = "//div[@id='box-latest-products']//div[@class='name']";
+
     //---------------Блок товара---------------/\
 
 
@@ -290,9 +290,9 @@ public class MainPage
         By lRegularPrice = By.xpath(regularPrice);
         Dimension sizeRegularPrice = driver.findElement(lRegularPrice).getSize();
         System.out.println("sizeCampaignPrice - " + sizeCampaignPrice.getHeight() * sizeCampaignPrice.getWidth() + ". "
-            + "sizeRegularPrice - " + sizeRegularPrice.getWidth() * sizeRegularPrice.getHeight());
+                + "sizeRegularPrice - " + sizeRegularPrice.getWidth() * sizeRegularPrice.getHeight());
         if (sizeCampaignPrice.getHeight() * sizeCampaignPrice.getWidth() > sizeRegularPrice.getWidth() * sizeRegularPrice
-            .getHeight())
+                .getHeight())
         {
             return true;
         }

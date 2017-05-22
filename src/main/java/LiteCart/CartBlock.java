@@ -4,30 +4,34 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
 /**
  * Created by Andrei_Tsyulia on 5/5/2017.
  */
-public class CartBlock
+public class CartBlock extends BaseBlock
 {
-    protected WebDriver driver;
-    protected WebDriverWait wait;
+    public CartBlock(ManagerBlocks managerBlocks) {
+        super(managerBlocks);
+    }
 
     public CartBlock(WebDriver driver)
     {
-        this.driver = driver;
-        wait = new WebDriverWait(driver, 10);
+        super(driver);
     }
 
-    private String pageFlag = "//div[@id='box-checkout-cart']/h2";
-    private String quantityDucksInCart = "//div[@id='box-checkout-cart']//input[contains(@name,'[quantity]')]";
-    private String updateCartItem = "//button[@name='update_cart_item']";
-    private String tableFlag = "//div[@id='order_confirmation-wrapper']//tbody/tr[1]/td[2]";
+    @FindBy (xpath = "//div[@id='box-checkout-cart']//input[contains(@name,'[quantity]')]")
+    private By lQuantityDucksInCart;
+
+    @FindBy (xpath ="//button[@name='update_cart_item']")
+    private By lUpdateCartItem;
+
     private String thereAreNoItemsInYourCart = "//div[@id='box-checkout']//p/em";
+    private String pageFlag = "//div[@id='box-checkout-cart']/h2";
+    private String tableFlag = "//div[@id='order_confirmation-wrapper']//tbody/tr[1]/td[2]";
     private String deleteButton = "//div[@id='box-checkout-cart']//button[@class='btn btn-danger']";
 
     public boolean isCartBlock()
@@ -39,13 +43,11 @@ public class CartBlock
 
     public int getDucksInCart()
     {
-        By lQuantityDucksInCart = By.xpath(quantityDucksInCart);
         return Integer.parseInt(driver.findElement(lQuantityDucksInCart).getAttribute("value"));
     }
 
     public void deleteOneDuck()
     {
-        By lQuantityDucksInCart = By.xpath(quantityDucksInCart);
         WebElement element = driver.findElement(lQuantityDucksInCart);
         int number = Integer.parseInt(element.getAttribute("value"));
         element.clear();
@@ -54,7 +56,6 @@ public class CartBlock
         By lTableFlag = By.xpath(tableFlag);
         WebElement elementTab = driver.findElement(lTableFlag);
 
-        By lUpdateCartItem = By.xpath(updateCartItem);
         driver.findElement(lUpdateCartItem).click();
 
         wait.until(ExpectedConditions.stalenessOf(elementTab));
@@ -93,7 +94,6 @@ public class CartBlock
     {
         if (ducksInCart != 1)
         {
-            By lQuantityDucksInCart = By.xpath(quantityDucksInCart);
             return Integer.parseInt(driver.findElement(lQuantityDucksInCart).getAttribute("value")) + 1 == ducksInCart;
         }
         else

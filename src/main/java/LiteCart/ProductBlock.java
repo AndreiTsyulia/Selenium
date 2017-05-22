@@ -5,26 +5,31 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created by Andrei_Tsyulia on 4/28/2017.
  */
-public class ProductBlock
+public class ProductBlock extends BaseBlock
 {
-    protected WebDriver driver;
-    protected WebDriverWait wait;
+    public ProductBlock(ManagerBlocks managerBlocks)
+    {
+        super(managerBlocks);
+    }
 
     public ProductBlock(WebDriver driver)
     {
-        this.driver = driver;
-        wait = new WebDriverWait(driver, 10);
+        super(driver);
     }
 
     private String pageFlag = "//h1[@class='title']";
-    private String nameOfProduct = "//h1[@class='title']";
+
+    @FindBy(xpath = "//h1[@class='title']")
+    private By lNameOfProduct;
+
+    //private String nameOfProduct = "//h1[@class='title']";
     private String regularPrice = "//del[@class='regular-price']";
     private String campaignPrice = "//strong[@class='campaign-price']";
     private String packageSize = "//select[@name='options[Size]']";
@@ -41,7 +46,7 @@ public class ProductBlock
 
     public String getProductText()
     {
-        By lNameOfProduct = By.xpath(nameOfProduct);
+        //By lNameOfProduct = By.xpath(nameOfProduct);
         String sNameOfProduct = driver.findElement(lNameOfProduct).getText();
         System.out.println(sNameOfProduct);
         return sNameOfProduct;
@@ -134,9 +139,9 @@ public class ProductBlock
         By lRegularPrice = By.xpath(regularPrice);
         Dimension sizeRegularPrice = driver.findElement(lRegularPrice).getSize();
         System.out.println("sizeCampaignPrice - " + sizeCampaignPrice.getHeight() * sizeCampaignPrice.getWidth() + ". "
-            + "sizeRegularPrice - " + sizeRegularPrice.getWidth() * sizeRegularPrice.getHeight());
+                + "sizeRegularPrice - " + sizeRegularPrice.getWidth() * sizeRegularPrice.getHeight());
         if (sizeCampaignPrice.getHeight() * sizeCampaignPrice.getWidth() > sizeRegularPrice.getWidth() * sizeRegularPrice
-            .getHeight())
+                .getHeight())
         {
             return true;
         }
@@ -153,7 +158,9 @@ public class ProductBlock
             By lPackageSize = By.xpath(packageSize);
             WebElement element = driver.findElement(lPackageSize);
             new Select(element).selectByValue("Small");
-        }catch (NoSuchElementException e){
+        }
+        catch (NoSuchElementException e)
+        {
         }
     }
 

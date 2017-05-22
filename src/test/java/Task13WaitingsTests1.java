@@ -26,7 +26,7 @@ public class Task13WaitingsTests1
     @BeforeClass(alwaysRun = true)
     public void beforeClass()
     {
-        System.setProperty("webdriver.chrome.driver", "D:\\VTB\\Drivers\\Chrome\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "F:\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().deleteAllCookies();
